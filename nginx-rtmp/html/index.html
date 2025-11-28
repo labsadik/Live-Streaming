@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Stream</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-6 rounded shadow w-full max-w-3xl">
+    <h1 class="text-2xl font-bold mb-4">Live Stream</h1>
+    <video id="live-video" controls autoplay class="w-full rounded bg-black">
+      <source id="video-source" type="application/x-mpegURL">
+    </video>
+    <p id="status" class="mt-4 text-gray-600"></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    const video = document.getElementById('live-video');
+    const status = document.getElementById('status');
+    const hls = new Hls();
+    const streamUrl = "http://localhost:8080/hls/admin.m3u8";
+
+    if(Hls.isSupported()) {
+      hls.loadSource(streamUrl);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play();
+        status.innerText = "Live Now!";
+      });
+    } else if(video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = streamUrl;
+      video.addEventListener('loadedmetadata', () => {
+        video.play();
+        status.innerText = "Live Now!";
+      });
+    } else {
+      status.innerText = "Your browser does not support HLS.";
+    }
+  </script>
+</body>
+</html>
