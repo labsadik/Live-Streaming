@@ -338,10 +338,3 @@ http://<VPS-IP>/index.html
 
 ---
 
-## **Author**
-
-**Sadik Laskar**
-
-* LinkedIn: https://www.linkedin.com/in/unscriptedsadik
-* Email: jr.sadiklaskar7@gmail.com
-
